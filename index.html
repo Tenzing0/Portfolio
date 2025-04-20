@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="content-wrapper">
+            <a class="navbar-brand" href="index.html">Tenzing Bhutia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="books.html">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="food.html">Food Trail</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-outline-light download-cv">
+                    <i class="fas fa-download me-2"></i>Download CV
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-white text-center" id="hero">
+        <div class="content-wrapper">
+            <h1 class="display-4 mb-4">Tenzing Sangay Bhutia</h1>
+            <p class="lead">Data Engineer and Analyst with expertise in Analytics, Machine Learning, and Business Intelligence</p>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-section py-5" id="about">
+        <div class="content-wrapper">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h2 class="section-title text-center mb-5">About Me</h2>
+                    <div class="row align-items-center">
+                        <div class="col-md-4 mb-4 mb-md-0">
+                            <div class="about-highlights">
+                                <div class="highlight-card mb-4">
+                                    <i class="fas fa-database highlight-icon"></i>
+                                    <h3>Data Engineering</h3>
+                                    <p>Building robust pipelines and automation solutions</p>
+                                </div>
+                                <div class="highlight-card mb-4">
+                                    <i class="fas fa-chart-line highlight-icon"></i>
+                                    <h3>Analytics</h3>
+                                    <p>Transforming data into actionable insights</p>
+                                </div>
+                                <div class="highlight-card">
+                                    <i class="fas fa-brain highlight-icon"></i>
+                                    <h3>Machine Learning</h3>
+                                    <p>Exploring AI applications and solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="about-content">
+                                <p class="lead mb-4">Hey, I'm a data engineer and analyst with a passion for turning messy data into meaningful stories. With experience across financial wellbeing, academic research, and tech, I've built dashboards that drive decisions, automated pipelines that save hours, and uncovered insights that actually matter.</p>
+                                
+                                <p class="mb-4">When I'm not wrangling data, you'll probably find me on the mats doing jiu-jitsu, kicking around a football, or chasing birdies on the badminton court. I'm big on performance — whether that's helping a team hit KPIs or improving my own game.</p>
+                                
+                                <p class="mb-4">I've worked with companies like AIA and RMIT, using tools like Alteryx, Tableau, SQL, and Python to dig deep into data. But I don't just build — I tell stories with it. My goal? Make data clear, actionable, and a little bit beautiful.</p>
+                                
+                                <p class="mb-0">Currently diving deeper into machine learning, exploring AI applications, and sharing my journey on Medium. If you're into data, sports, or good conversation — we'll probably get along.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section py-5" id="projects">
+        <div class="content-wrapper">
+            <h2 class="section-title text-center mb-5">Featured Projects</h2>
+            <div class="row g-4">
+                <!-- Project 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Data Analytics Dashboard" class="img-fluid">
+                            <div class="project-overlay">
+                                <div class="project-tech">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Tableau</span>
+                                    <span class="tech-tag">SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Data Analytics Dashboard</h3>
+                            <p>Built an interactive dashboard for visualizing customer behavior patterns and KPI tracking, resulting in a 25% improvement in decision-making efficiency.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-2"></i>View Code
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/600x400" alt="ML Pipeline Automation" class="img-fluid">
+                            <div class="project-overlay">
+                                <div class="project-tech">
+                                    <span class="tech-tag">Alteryx</span>
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">ML</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>ML Pipeline Automation</h3>
+                            <p>Developed an automated machine learning pipeline for predictive analytics, reducing processing time by 40% and improving model accuracy by 15%.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-2"></i>View Code
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Data Integration Platform" class="img-fluid">
+                            <div class="project-overlay">
+                                <div class="project-tech">
+                                    <span class="tech-tag">ETL</span>
+                                    <span class="tech-tag">SQL</span>
+                                    <span class="tech-tag">APIs</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Data Integration Platform</h3>
+                            <p>Created a robust data integration platform handling multiple data sources, implementing real-time synchronization and data quality checks.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-2"></i>View Code
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="content-wrapper">
+            <div class="row g-4">
+                <!-- Main Article - Professional Experience -->
+                <article class="col-lg-9" id="experience">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title mb-4">Professional Experience</h2>
+                            
+                            <div class="timeline">
+                                <!-- AIA Experience -->
+                                <div class="timeline-item">
+                                    <div class="timeline-number">1</div>
+                                    <div class="timeline-content">
+                                        <div class="company-header">
+                                            <img src="images/AIA_CorporateLogo_PNG_red.webp" alt="AIA Logo" class="company-logo">
+                                            <div class="company-info">
+                                                <h5 class="company-name">AIA Financial Wellbeing</h5>
+                                                <p class="company-location">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    Melbourne, Victoria, Australia
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="role-info">
+                                            <h4 class="role-title">Data Engineer and Analyst</h4>
+                                            <p class="role-date">Apr 2022 - Present · <span id="duration"></span></p>
+                                        </div>
+
+                                        <div class="responsibilities">
+                                            <h6>Key Responsibilities:</h6>
+                                            <ul>
+                                                <li>Data Analytics and Alteryx Integration: Leveraged Alteryx in conjunction with Tableau to develop and maintain over 10 interactive dashboards, providing in-depth performance reports covering metrics such as conversions, turnaround time, and KPIs.</li>
+                                                <li>Agile Project Collaboration: Actively participated in an Agile project team, using Alteryx, Tableau, and SQL to redefine essential marketing KPIs. Simultaneously, improved marketing materials and standard operating procedures (SOPs), ultimately resulting in a significant 15% boost in conversion rates.</li>
+                                                <li>Data Automation Expertise: Applied advanced data engineering techniques, including the creation of batch code files and Alteryx workflows, to systematically automate repetitive data processing tasks. Achieved substantial time savings, estimated at 20 hours of weekly manual work.</li>
+                                                <li>Data Quality Assurance: Ensured data accuracy and integrity by implementing robust data validation and cleansing procedures.</li>
+                                                <li>Predictive Modeling & Training: Utilized Alteryx and machine learning techniques for business forecasting and customer segmentation.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Woolworths Experience -->
+                                <div class="timeline-item">
+                                    <div class="timeline-number">2</div>
+                                    <div class="timeline-content">
+                                        <div class="company-header">
+                                            <img src="images/woolworths.jpeg" alt="Woolworths Logo" class="company-logo">
+                                            <div class="company-info">
+                                                <h5 class="company-name">Woolworths Supermarkets</h5>
+                                                <p class="company-location">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    Melbourne, Australia
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="role-info">
+                                            <h4 class="role-title">Administrative Office Specialist</h4>
+                                            <p class="role-date">Oct 2018 - Apr 2022 · 3 yrs 7 mos</p>
+                                        </div>
+
+                                        <div class="responsibilities">
+                                            <h6>Key Responsibilities:</h6>
+                                            <ul>
+                                                <li>Supported line Manager and Manager with effective correspondence management, document coordination, and customer relations.</li>
+                                                <li>Managed office inventory by restocking supplies and placing purchase orders to maintain adequate stock levels.</li>
+                                                <li>Streamlined office operations by effectively monitoring and addressing client correspondence and data communications.</li>
+                                                <li>Delivered clerical support by efficiently handling a wide range of routine and special requirements.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- STARTTS Experience -->
+                                <div class="timeline-item">
+                                    <div class="timeline-number">3</div>
+                                    <div class="timeline-content">
+                                        <div class="company-header">
+                                            <img src="images/startts-logo.svg" alt="STARTTS Logo" class="company-logo">
+                                            <div class="company-info">
+                                                <h5 class="company-name">NSW SERVICE FOR THE TREATMENT AND REHABILITATION OF TORTURE AND TRAUMA SURVIVORS (STARTTS)</h5>
+                                                <p class="company-location">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    Sydney, New South Wales, Australia
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="role-info">
+                                            <h4 class="role-title">Volunteer Research Data Analyst</h4>
+                                            <p class="role-date">Aug 2021 - Dec 2021 · 5 mos</p>
+                                        </div>
+
+                                        <div class="responsibilities">
+                                            <h6>Key Responsibilities:</h6>
+                                            <ul>
+                                                <li>Identified cultural and ethical issues in the development of refugee intervention programs.</li>
+                                                <li>Planned, modified and executed research techniques, procedures and tests.</li>
+                                                <li>Evaluated statistical techniques and extracted information from data to assess the robustness of research outputs.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RMIT Experience -->
+                                <div class="timeline-item">
+                                    <div class="timeline-number">4</div>
+                                    <div class="timeline-content">
+                                        <div class="company-header">
+                                            <img src="images/imgbin-rmit-university-vietnam-rmit-graduate-school-of-business-and-law-logo-grant-camp-city-campus-business-BxczizG8gvdg6fK2iRY8JRT6D.jpg" alt="RMIT Logo" class="company-logo">
+                                            <div class="company-info">
+                                                <h5 class="company-name">RMIT University</h5>
+                                                <p class="company-location">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    Melbourne, Australia
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="role-info">
+                                            <h4 class="role-title">CS Research Officer</h4>
+                                            <p class="role-date">Jun 2019 - Sep 2020 · 1 yr 4 mos</p>
+                                        </div>
+
+                                        <div class="responsibilities">
+                                            <h6>Key Responsibilities:</h6>
+                                            <ul>
+                                                <li>Coordinated statistical data analysis, design, and information flow to optimize data collection processes.</li>
+                                                <li>Updated participant and sensor data subsystems to enhance data accuracy and streamline collection methods.</li>
+                                                <li>Created Excel documents for metrics data analysis, aiding in resource allocation decisions.</li>
+                                                <li>Recommended data standardization practices to ensure data integrity and consistency.</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="role-info mt-4">
+                                            <h4 class="role-title">Research Intern - Visualization and Data Analysis</h4>
+                                            <p class="role-date">Dec 2018 - Jun 2019 · 7 mos</p>
+                                        </div>
+
+                                        <div class="responsibilities">
+                                            <h6>Key Responsibilities:</h6>
+                                            <ul>
+                                                <li>Participated in data improvement initiatives for continuous quality improvements with Cortana Intelligence.</li>
+                                                <li>Consulted participants regularly to enhance data collection, processing and analysis.</li>
+                                                <li>Provided solutions to problems related to data management and visualization.</li>
+                                                <li>Implemented Machine Learning to predict future task of various participants.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </article>
+
+                <!-- Right Sidebar - Skills and Education -->
+                <aside class="col-lg-3">
+                    <!-- Skills Section -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="card-title h5 mb-0">Skills</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Dashboards & Data Visualization
+                                    <span class="badge bg-primary rounded-pill">Expert</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Alteryx
+                                    <span class="badge bg-primary rounded-pill">Expert</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Tableau
+                                    <span class="badge bg-primary rounded-pill">Expert</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Python
+                                    <span class="badge bg-primary rounded-pill">Advanced</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    SQL
+                                    <span class="badge bg-primary rounded-pill">Advanced</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Machine Learning
+                                    <span class="badge bg-primary rounded-pill">Advanced</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Microsoft Power BI
+                                    <span class="badge bg-primary rounded-pill">Advanced</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Business Analysis
+                                    <span class="badge bg-primary rounded-pill">Advanced</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Education Section -->
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="card-title h5 mb-0">Education</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="education-item mb-4">
+                                <h4 class="h5">RMIT University</h4>
+                                <p class="text-muted mb-2">Master's degree, Data Science</p>
+                                <p class="text-muted mb-2">2018 - 2020</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Grade: 3.4 GPA</li>
+                                    <li class="list-group-item">Focus on Data Science and Analytics</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="education-item">
+                                <h4 class="h5">Delhi College of Engineering</h4>
+                                <p class="text-muted mb-2">Bachelor of Technology, Mechanical and Automobile Engineering</p>
+                                <p class="text-muted mb-2">2012 - 2016</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">DELHI TECHNOLOGICAL UNIVERISTY TESTAMUR</li>
+                                    <li class="list-group-item">Mechanical and Automotive Systems</li>
+            </ul>
+                            </div>
+                        </div>
+                    </div>
+        </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white" id="contact">
+        <div class="content-wrapper">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <h5 class="mb-3">About Me</h5>
+                    <p>A dedicated Data Engineer and Analyst with extensive experience in data analytics, automation, and machine learning. Proven track record in implementing data-driven solutions and improving business processes.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <ul class="list-unstyled contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <span>Melbourne, Victoria, Australia</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href="mailto:contact@example.com">contact@example.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone me-2"></i>
+                            <a href="tel:+61123456789">+61 1234 56789</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-briefcase me-2"></i>
+                            <span>Available for opportunities</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Connect With Me</h5>
+                    <ul class="list-unstyled social-links">
+                        <li>
+                            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-linkedin me-2"></i>LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github me-2"></i>GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/your-handle" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-twitter me-2"></i>Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://medium.com/@your-username" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-medium me-2"></i>Medium
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <a href="#" class="btn btn-outline-light me-2">Download CV</a>
+                    <a href="mailto:contact@example.com" class="btn btn-outline-light">Get in Touch</a>
+                </div>
+                <p class="mb-0">&copy; 2024 My Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Duration Calculator Script -->
+    <script>
+        function calculateDuration() {
+            const startDate = new Date('2022-04-01'); // Start date
+            const currentDate = new Date();
+            
+            let years = currentDate.getFullYear() - startDate.getFullYear();
+            let months = currentDate.getMonth() - startDate.getMonth();
+            let days = currentDate.getDate() - startDate.getDate();
+            
+            // Adjust for negative months or days
+            if (days < 0) {
+                months--;
+                // Get days in previous month
+                const previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 0);
+                days += previousMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Create duration string
+            let duration = '';
+            if (years > 0) duration += `${years} yr${years > 1 ? 's' : ''} `;
+            if (months > 0) duration += `${months} mo${months > 1 ? 's' : ''} `;
+            if (days > 0) duration += `${days} day${days > 1 ? 's' : ''}`;
+            
+            document.getElementById('duration').textContent = duration.trim();
+        }
+
+        // Calculate initially
+        calculateDuration();
+        
+        // Update every day
+        setInterval(calculateDuration, 24 * 60 * 60 * 1000);
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+</html> 

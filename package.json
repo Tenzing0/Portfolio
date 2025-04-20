@@ -1,0 +1,21 @@
+{
+  "name": "portfolio-website",
+  "version": "1.0.0",
+  "description": "Professional portfolio website",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server .",
+    "build": "npm run build:css",
+    "build:css": "sass styles.scss:styles.css --style compressed",
+    "watch": "sass --watch styles.scss:styles.css"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "aos": "^2.3.1",
+    "font-awesome": "^4.7.0"
+  },
+  "devDependencies": {
+    "sass": "^1.62.1",
+    "live-server": "^1.2.2"
+  }
+} 

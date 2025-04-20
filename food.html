@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Trail - My Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .food-card {
+            transition: transform 0.3s ease;
+        }
+        .food-card:hover {
+            transform: translateY(-5px);
+        }
+        .food-image {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        .cuisine-tag {
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-right: 0.5rem;
+        }
+        /* Enhanced Header Styles */
+        .food-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .food-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.1)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            opacity: 0.1;
+        }
+        .food-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .food-header .lead {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .header-icons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .header-icons i {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.8);
+            transition: transform 0.3s ease;
+        }
+        .header-icons i:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .food-header {
+                padding: 4rem 0;
+            }
+            .food-header h1 {
+                font-size: 2.5rem;
+            }
+            .food-header .lead {
+                font-size: 1.2rem;
+            }
+        }
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .map-controls button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            background: #3498db;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .map-controls button:hover {
+            background: #2980b9;
+        }
+        #addLocationForm {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            padding: 20px;
+            position: relative;
+            z-index: 1000;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .cuisine-tag {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .info-window {
+            padding: 10px;
+        }
+        .info-window h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .info-window .rating {
+            color: #f39c12;
+            margin: 10px 0;
+        }
+        .info-window .tags {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="content-wrapper">
+            <a class="navbar-brand" href="index.html">Tenzing Bhutia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="books.html">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="food.html">Food Trail</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-outline-light download-cv ms-3">
+                    <i class="fas fa-download me-2"></i>Download CV
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="food-header text-white text-center">
+        <div class="content-wrapper">
+            <h1 class="display-4 mb-4">My Food Trail</h1>
+            <p class="lead">Exploring the world, one dish at a time</p>
+            <div class="header-icons">
+                <i class="fas fa-utensils"></i>
+                <i class="fas fa-map-marked-alt"></i>
+                <i class="fas fa-globe-asia"></i>
+                <i class="fas fa-camera"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="content-wrapper">
+            <!-- Interactive Map -->
+            <div id="map">
+                <div class="map-controls">
+                    <button id="showAll">Show All Locations</button>
+                    <button id="showFavorites">Show Favorites</button>
+                    <button id="addLocationBtn">Add New Location</button>
+                </div>
+            </div>
+
+            <!-- Add Location Form (initially hidden) -->
+            <div id="addLocationForm" class="card mb-4" style="display: none;">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Add New Food Location</h5>
+                    <form id="locationForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="locationName" class="form-label">Location Name</label>
+                                <input type="text" class="form-control" id="locationName" required placeholder="e.g., Best Pizza Place">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="locationType" class="form-label">Type</label>
+                                <select class="form-select" id="locationType" required>
+                                    <option value="restaurant">Restaurant</option>
+                                    <option value="cafe">Cafe</option>
+                                    <option value="street_food">Street Food</option>
+                                    <option value="market">Market</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="latitude" class="form-label">Latitude</label>
+                                <input type="number" step="any" class="form-control" id="latitude" required placeholder="e.g., -37.8136">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="longitude" class="form-label">Longitude</label>
+                                <input type="number" step="any" class="form-control" id="longitude" required placeholder="e.g., 144.9631">
+                            </div>
+                            <div class="col-12">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3" required placeholder="Describe the location and what makes it special"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="rating" class="form-label">Rating (1-5)</label>
+                                <input type="number" class="form-control" id="rating" min="1" max="5" step="0.1" required placeholder="e.g., 4.5">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cuisineTags" class="form-label">Cuisine Tags (comma separated)</label>
+                                <input type="text" class="form-control" id="cuisineTags" placeholder="e.g., Italian, Asian, Fusion">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary me-2">Add Location</button>
+                                <button type="button" class="btn btn-secondary" id="cancelAdd">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Food Recommendations -->
+            <div class="row g-4">
+                <!-- Melbourne -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card food-card h-100">
+                        <img src="https://via.placeholder.com/600x400" class="food-image" alt="Melbourne Food">
+                        <div class="card-body">
+                            <h5 class="card-title">Melbourne, Australia</h5>
+                            <p class="card-text">A melting pot of cultures offering diverse culinary experiences.</p>
+                            <div class="mb-3">
+                                <span class="cuisine-tag">Italian</span>
+                                <span class="cuisine-tag">Asian Fusion</span>
+                                <span class="cuisine-tag">Modern Australian</span>
+                            </div>
+                            <a href="#" class="btn btn-primary" data-location="melbourne">View Recommendations</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sydney -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card food-card h-100">
+                        <img src="https://via.placeholder.com/600x400" class="food-image" alt="Sydney Food">
+                        <div class="card-body">
+                            <h5 class="card-title">Sydney, Australia</h5>
+                            <p class="card-text">Coastal city with fresh seafood and international flavors.</p>
+                            <div class="mb-3">
+                                <span class="cuisine-tag">Seafood</span>
+                                <span class="cuisine-tag">Middle Eastern</span>
+                                <span class="cuisine-tag">Contemporary</span>
+                            </div>
+                            <a href="#" class="btn btn-primary" data-location="sydney">View Recommendations</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delhi -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card food-card h-100">
+                        <img src="https://via.placeholder.com/600x400" class="food-image" alt="Delhi Food">
+                        <div class="card-body">
+                            <h5 class="card-title">Delhi, India</h5>
+                            <p class="card-text">Rich in traditional Indian cuisine and street food culture.</p>
+                            <div class="mb-3">
+                                <span class="cuisine-tag">North Indian</span>
+                                <span class="cuisine-tag">Street Food</span>
+                                <span class="cuisine-tag">Mughlai</span>
+                            </div>
+                            <a href="#" class="btn btn-primary" data-location="delhi">View Recommendations</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white" id="contact">
+        <div class="content-wrapper">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <h5 class="mb-3">About Me</h5>
+                    <p>A dedicated Data Engineer and Analyst with extensive experience in data analytics, automation, and machine learning. Proven track record in implementing data-driven solutions and improving business processes.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <ul class="list-unstyled contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <span>Melbourne, Victoria, Australia</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href="mailto:contact@example.com">contact@example.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone me-2"></i>
+                            <a href="tel:+61123456789">+61 1234 56789</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-briefcase me-2"></i>
+                            <span>Available for opportunities</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Connect With Me</h5>
+                    <ul class="list-unstyled social-links">
+                        <li>
+                            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-linkedin me-2"></i>LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github me-2"></i>GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/your-handle" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-twitter me-2"></i>Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://medium.com/@your-username" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-medium me-2"></i>Medium
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <a href="#" class="btn btn-outline-light me-2">Download CV</a>
+                    <a href="mailto:contact@example.com" class="btn btn-outline-light">Get in Touch</a>
+                </div>
+                <p class="mb-0">&copy; 2024 My Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Google Map
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 20, lng: 0 },
+                zoom: 2,
+                minZoom: 2,
+                maxZoom: 18,
+                styles: [
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels",
+                        "stylers": [{ "visibility": "off" }]
+                    }
+                ]
+            });
+
+            // Sample saved locations (replace with your actual saved places)
+            const savedLocations = [
+                {
+                    name: 'Melbourne',
+                    location: { lat: -37.8136, lng: 144.9631 },
+                    type: 'restaurant',
+                    rating: 4.5,
+                    description: 'Melbourne, Australia - Food Capital'
+                },
+                {
+                    name: 'Sydney',
+                    location: { lat: -33.8688, lng: 151.2093 },
+                    type: 'restaurant',
+                    rating: 4.7,
+                    description: 'Sydney, Australia - Coastal Cuisine'
+                },
+                {
+                    name: 'Delhi',
+                    location: { lat: 28.6139, lng: 77.2090 },
+                    type: 'restaurant',
+                    rating: 4.8,
+                    description: 'Delhi, India - Street Food Paradise'
+                }
+            ];
+
+            // Create markers for each location
+            const markers = savedLocations.map(location => {
+                const marker = new google.maps.Marker({
+                    position: location.location,
+                    map: map,
+                    title: location.name,
+                    icon: {
+                        url: `https://maps.google.com/mapfiles/ms/icons/${location.type === 'restaurant' ? 'red' : 'blue'}-dot.png`
+                    }
+                });
+
+                // Create info window content
+                const content = `
+                    <div class="info-window">
+                        <h3>${location.name}</h3>
+                        <p>${location.description}</p>
+                        <div class="rating">
+                            ${Array(Math.floor(location.rating)).fill('★').join('')}
+                            ${location.rating % 1 ? '½' : ''}
+                        </div>
+                    </div>
+                `;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: content
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                return marker;
+            });
+
+            // Show all locations
+            document.getElementById('showAll').addEventListener('click', () => {
+                const bounds = new google.maps.LatLngBounds();
+                markers.forEach(marker => {
+                    bounds.extend(marker.getPosition());
+                });
+                map.fitBounds(bounds);
+            });
+
+            // Show favorites (example: filter by rating > 4.5)
+            document.getElementById('showFavorites').addEventListener('click', () => {
+                const favorites = savedLocations.filter(loc => loc.rating > 4.5);
+                const bounds = new google.maps.LatLngBounds();
+                favorites.forEach((loc, index) => {
+                    bounds.extend(markers[index].getPosition());
+                });
+                map.fitBounds(bounds);
+            });
+        }
+
+        // Add location form handling
+        document.getElementById('addLocationBtn').addEventListener('click', () => {
+            document.getElementById('addLocationForm').style.display = 'block';
+        });
+
+        document.getElementById('cancelAdd').addEventListener('click', () => {
+            document.getElementById('addLocationForm').style.display = 'none';
+            document.getElementById('locationForm').reset();
+        });
+
+        document.getElementById('locationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newLocation = {
+                name: document.getElementById('locationName').value,
+                type: document.getElementById('locationType').value,
+                location: {
+                    lat: parseFloat(document.getElementById('latitude').value),
+                    lng: parseFloat(document.getElementById('longitude').value)
+                },
+                description: document.getElementById('description').value,
+                rating: parseFloat(document.getElementById('rating').value),
+                cuisineTags: document.getElementById('cuisineTags').value.split(',').map(tag => tag.trim())
+            };
+
+            // Add to savedLocations array
+            savedLocations.push(newLocation);
+
+            // Create and add marker
+            const marker = new google.maps.Marker({
+                position: newLocation.location,
+                map: map,
+                title: newLocation.name,
+                icon: {
+                    url: `https://maps.google.com/mapfiles/ms/icons/${newLocation.type === 'restaurant' ? 'red' : 'blue'}-dot.png`
+                }
+            });
+
+            // Create info window
+            const content = `
+                <div class="info-window">
+                    <h3>${newLocation.name}</h3>
+                    <p>${newLocation.description}</p>
+                    <div class="rating">
+                        ${Array(Math.floor(newLocation.rating)).fill('★').join('')}
+                        ${newLocation.rating % 1 ? '½' : ''}
+                    </div>
+                    <div class="tags">
+                        ${newLocation.cuisineTags.map(tag => `<span class="cuisine-tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: content
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+            });
+
+            // Reset form and hide it
+            document.getElementById('locationForm').reset();
+            document.getElementById('addLocationForm').style.display = 'none';
+
+            // Center map on new location
+            map.setCenter(newLocation.location);
+            map.setZoom(15);
+        });
+
+        // Initialize the map when the page loads
+        window.onload = initMap;
+    </script>
+</body>
+</html> 
