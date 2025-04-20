@@ -43,7 +43,7 @@ function displayProjects(projects) {
     projectsGrid.innerHTML = projects.map(project => `
         <div class="project-card">
             <div class="project-image">
-                <img src="images/${project.image}" alt="${project.title}" class="lazy">
+                <img src="${project.image}" alt="${project.title}" class="lazy">
             </div>
             <div class="project-content">
                 <h3>${project.title}</h3>
