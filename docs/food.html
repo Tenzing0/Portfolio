@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Trail - My Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .map-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+        .map-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .food-card {
+            transition: transform 0.3s ease;
+        }
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .food-image {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        .cuisine-tag {
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-right: 0.5rem;
+        }
+        /* Enhanced Header Styles */
+        .food-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .food-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.1)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            opacity: 0.1;
+        }
+        .food-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .food-header .lead {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .header-icons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .header-icons i {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.8);
+            transition: transform 0.3s ease;
+        }
+        .header-icons i:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .food-header {
+                padding: 4rem 0;
+            }
+            .food-header h1 {
+                font-size: 2.5rem;
+            }
+            .food-header .lead {
+                font-size: 1.2rem;
+            }
+        }
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .map-controls button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            background: #3498db;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .map-controls button:hover {
+            background: #2980b9;
+        }
+        #addLocationForm {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            padding: 20px;
+            position: relative;
+            z-index: 1000;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .cuisine-tag {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .info-window {
+            padding: 10px;
+        }
+        .info-window h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .info-window .rating {
+            color: #f39c12;
+            margin: 10px 0;
+        }
+        .info-window .tags {
+            margin-top: 10px;
+        }
+        /* Contact Section Styles */
+        #contact {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 0;
+            margin-top: 50px;
+        }
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .contact-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .contact-header h2 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .contact-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-control {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+        }
+        textarea.form-control {
+            min-height: 150px;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+        }
+        @media (max-width: 768px) {
+            #contact {
+                padding: 50px 0;
+            }
+            .contact-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="content-wrapper">
+            <a class="navbar-brand" href="index.html">Tenzing Bhutia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="books.html">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="food.html">Food Trail</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-outline-light download-cv ms-3">
+                    <i class="fas fa-download me-2"></i>Download CV
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="food-header text-white text-center">
+        <div class="content-wrapper">
+            <h1>My Food Trail</h1>
+            <p class="lead">Discover my favorite food spots around the world</p>
+        </div>
+    </header>
+
+    <!-- Map Section -->
+    <section class="map-section py-5">
+        <div class="content-wrapper">
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-overlay">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                        <label class="form-check-label" for="darkModeToggle">Dark Mode</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Recommendations Section -->
+    <section class="food-recommendations py-5">
+        <div class="content-wrapper">
+            <h2 class="section-title text-center mb-5">Food Recommendations</h2>
+            <div class="row g-4">
+                <!-- Melbourne -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="food-card">
+                        <div class="food-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Melbourne Food" class="img-fluid">
+                        </div>
+                        <div class="food-content">
+                            <h3>Melbourne</h3>
+                            <p class="cuisine">Australian, Asian Fusion</p>
+                            <p>Discover the vibrant food scene in Melbourne's laneways and markets.</p>
+                            <div class="food-tags">
+                                <span class="tag">Coffee</span>
+                                <span class="tag">Brunch</span>
+                                <span class="tag">Fine Dining</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sydney -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="food-card">
+                        <div class="food-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Sydney Food" class="img-fluid">
+                        </div>
+                        <div class="food-content">
+                            <h3>Sydney</h3>
+                            <p class="cuisine">Seafood, Modern Australian</p>
+                            <p>Experience world-class seafood and harbor-side dining in Sydney.</p>
+                            <div class="food-tags">
+                                <span class="tag">Seafood</span>
+                                <span class="tag">Waterfront</span>
+                                <span class="tag">Cafes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delhi -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="food-card">
+                        <div class="food-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Delhi Food" class="img-fluid">
+                        </div>
+                        <div class="food-content">
+                            <h3>Delhi</h3>
+                            <p class="cuisine">Indian, Street Food</p>
+                            <p>Explore the rich flavors of Delhi's street food and traditional cuisine.</p>
+                            <div class="food-tags">
+                                <span class="tag">Street Food</span>
+                                <span class="tag">North Indian</span>
+                                <span class="tag">Sweets</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="text-center py-5">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h2>Want to Connect?</h2>
+                <p>Find me on social media or send me an email!</p>
+            </div>
+            <a href="#footer" class="btn btn-submit text-white">Connect with Me</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-dark text-white py-4">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>About Me</h5>
+                    <p>A passionate food explorer sharing culinary experiences from around the world.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Connect</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 Tenzing Bhutia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Custom JS -->
+    <script src="js/projects.js"></script>
+    <script>
+        // Initialize the map
+        document.addEventListener('DOMContentLoaded', function() {
+            const map = L.map('map').setView([20, 0], 2);
+
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                minZoom: 2,
+                maxZoom: 18
+            }).addTo(map);
+
+            // Add markers for food locations
+            const locations = [
+                {
+                    name: 'Melbourne',
+                    lat: -37.8136,
+                    lng: 144.9631,
+                    description: 'Melbourne, Australia - Coffee Capital'
+                },
+                {
+                    name: 'Sydney',
+                    lat: -33.8688,
+                    lng: 151.2093,
+                    description: 'Sydney, Australia - Harbor City'
+                },
+                {
+                    name: 'Delhi',
+                    lat: 28.6139,
+                    lng: 77.2090,
+                    description: 'Delhi, India - Street Food Paradise'
+                }
+            ];
+
+            locations.forEach(location => {
+                const marker = L.marker([location.lat, location.lng]).addTo(map);
+                marker.bindPopup(`<b>${location.name}</b><br>${location.description}`);
+            });
+
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                            minZoom: 2,
+                            maxZoom: 18
+                        }).addTo(map);
+                    } else {
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                            minZoom: 2,
+                            maxZoom: 18
+                        }).addTo(map);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
