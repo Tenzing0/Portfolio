@@ -1,71 +1,67 @@
 # Portfolio Website
 
-A professional portfolio website built with modern web technologies.
+A professional portfolio website showcasing my work, projects, and interests, built with modern web technologies.
 
 ## Project Structure
 
 ```
 portfolio-website/
 ├── assets/              # Static assets
-│   ├── css/            # Compiled CSS files
+│   ├── css/            # CSS files
 │   ├── js/             # JavaScript files
 │   ├── images/         # Image assets
 │   └── fonts/          # Font files
-├── src/                # Source files
-│   ├── components/     # Reusable components
-│   │   ├── header.html
-│   │   ├── footer.html
-│   │   └── navbar.html
-│   ├── layouts/        # Layout templates
-│   │   └── main.html
-│   ├── pages/          # Page templates
-│   │   ├── index.html
-│   │   └── projects.html
-│   └── scss/           # SCSS source files
-├── dist/               # Production build
-├── package.json        # Project dependencies
+├── pages/              # Website pages
+│   ├── index.html      # Home page
+│   ├── projects.html   # Projects showcase
+│   ├── books.html      # Books collection
+│   └── food-trail.html # Food recommendations
+├── styles.css          # Main stylesheet
 └── README.md          # Project documentation
 ```
 
 ## Features
 
-- Responsive design
-- Modern UI/UX
-- Project showcase
+- Responsive design optimized for all devices
+- Modern and clean UI/UX
+- Interactive project showcase
+- Books collection with ratings and reviews
+- Food Trail page with interactive map and recommendations
 - Contact form
-- Blog section
+- Smooth scrolling and animations
 - SEO optimized
+
+## Pages
+
+1. **Home** - Introduction and overview
+2. **Projects** - Showcase of completed projects
+3. **Books** - Collection of favorite books with ratings
+4. **Food Trail** - Interactive food recommendations and map
 
 ## Technologies Used
 
 - HTML5
-- CSS3/SCSS
+- CSS3
 - JavaScript
-- Bootstrap 5
-- AOS (Animate On Scroll)
+- Google Maps API
 - Font Awesome
+- Google Fonts
 
 ## Getting Started
 
 1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start development server:
-   ```bash
-   npm start
-   ```
-4. Build for production:
-   ```bash
-   npm run build
-   ```
+2. Open `index.html` in your web browser
+3. Navigate through the different pages using the navigation menu
 
-## Development
+## Deployment
 
-- `npm start` - Start development server
-- `npm run build` - Build for production
-- `npm run watch` - Watch for changes during development
+This website is deployed using GitHub Pages. To deploy your own version:
+
+1. Fork this repository
+2. Go to your repository settings
+3. Navigate to Pages
+4. Select the main branch as the source
+5. Your site will be published at `https://[your-username].github.io/[repository-name]`
 
 ## Contributing
 
