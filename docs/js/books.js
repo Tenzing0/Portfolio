@@ -2,7 +2,7 @@
 async function fetchBooksData() {
     try {
         console.log('Starting to fetch books data...');
-        const response = await fetch('../data/books.csv');
+        const response = await fetch('data/books.csv');
         console.log('Response status:', response.status);
         console.log('Response OK:', response.ok);
         
