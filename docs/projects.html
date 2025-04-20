@@ -54,10 +54,12 @@
             </div>
 
             <div class="project-filters" data-aos="fade-up" data-aos-delay="300">
-                <button class="btn" data-filter="all">All</button>
-                <button class="btn" data-filter="web">Web Development</button>
-                <button class="btn" data-filter="mobile">Mobile Apps</button>
-                <button class="btn" data-filter="design">UI/UX Design</button>
+                <button class="btn active" data-filter="all">All</button>
+                <button class="btn" data-filter="python">Python</button>
+                <button class="btn" data-filter="aws">AWS</button>
+                <button class="btn" data-filter="react">React</button>
+                <button class="btn" data-filter="docker">Docker</button>
+                <button class="btn" data-filter="machine-learning">Machine Learning</button>
             </div>
         </div>
     </header>
@@ -65,58 +67,18 @@
     <main>
         <div class="content-wrapper">
             <div class="projects-grid">
-                <!-- Project Card 1 -->
-                <div class="project-card" data-categories="web design" data-aos="fade-up">
-                    <div class="project-image">
-                        <img src="images/project1.jpg" alt="Project 1">
-                    </div>
-                    <div class="project-content">
-                        <h3>E-commerce Platform</h3>
-                        <p>A modern e-commerce solution with advanced features and responsive design.</p>
-                        <div class="project-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">MongoDB</span>
-                        </div>
-                        <a href="#" class="btn btn-primary">View Project</a>
-                    </div>
+                <!-- Project cards will be dynamically inserted here -->
+            </div>
+            <div id="loadingMessage" class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
-
-                <!-- Project Card 2 -->
-                <div class="project-card" data-categories="mobile" data-aos="fade-up">
-                    <div class="project-image">
-                        <img src="images/project2.jpg" alt="Project 2">
-                    </div>
-                    <div class="project-content">
-                        <h3>Fitness Tracking App</h3>
-                        <p>Mobile application for tracking workouts and maintaining fitness goals.</p>
-                        <div class="project-tags">
-                            <span class="tag">Flutter</span>
-                            <span class="tag">Firebase</span>
-                            <span class="tag">iOS/Android</span>
-                        </div>
-                        <a href="#" class="btn btn-primary">View Project</a>
-                    </div>
+                <p class="mt-3">Loading projects...</p>
+            </div>
+            <div id="errorMessage" class="text-center py-5" style="display: none;">
+                <div class="alert alert-danger" role="alert">
+                    Error loading projects. Please try refreshing the page.
                 </div>
-
-                <!-- Project Card 3 -->
-                <div class="project-card" data-categories="design" data-aos="fade-up">
-                    <div class="project-image">
-                        <img src="images/project3.jpg" alt="Project 3">
-                    </div>
-                    <div class="project-content">
-                        <h3>Brand Identity Design</h3>
-                        <p>Complete brand identity design including logo, color palette, and guidelines.</p>
-                        <div class="project-tags">
-                            <span class="tag">Figma</span>
-                            <span class="tag">Adobe CC</span>
-                            <span class="tag">Branding</span>
-                        </div>
-                        <a href="#" class="btn btn-primary">View Project</a>
-                    </div>
-                </div>
-
-                <!-- Add more project cards as needed -->
             </div>
         </div>
     </main>

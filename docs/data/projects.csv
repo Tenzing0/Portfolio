@@ -1,6 +1,6 @@
-title,description,image,technologies,github_url,live_url
-Data Analytics Dashboard,"A comprehensive dashboard for analyzing business metrics and KPIs","woolworths.jpeg","Python, Tableau, SQL, AWS","https://github.com/your-username/data-dashboard","https://dashboard.example.com"
-Machine Learning Model,"Predictive model for customer behavior analysis","AIA_CorporateLogo_PNG_red.webp","Python, Scikit-learn, TensorFlow, Docker","https://github.com/your-username/ml-model","https://ml-model.example.com"
-Web Application,"Modern web application with real-time features","imgbin-rmit-university-vietnam-rmit-graduate-school-of-business-and-law-logo-grant-camp-city-campus-business-BxczizG8gvdg6fK2iRY8JRT6D.jpg","React, Node.js, MongoDB, AWS","https://github.com/your-username/web-app","https://webapp.example.com"
-Automation Script,"Automated data processing and reporting system","startts-logo.svg","Python, Pandas, Airflow, Docker","https://github.com/your-username/automation","https://automation.example.com"
-Data Pipeline,"ETL pipeline for processing large datasets","person-sits-looking-out-towards-still-water.jpg","Python, Apache Spark, Kafka, AWS","https://github.com/your-username/data-pipeline","https://pipeline.example.com" 
+title,description,image,technologies,github_url,live_url,category
+Data Analytics Dashboard,"A comprehensive dashboard for analyzing business metrics and KPIs","woolworths.jpeg","Python, Tableau, SQL, AWS","https://github.com/your-username/data-dashboard","https://dashboard.example.com","web design"
+Machine Learning Model,"Predictive model for customer behavior analysis","AIA_CorporateLogo_PNG_red.webp","Python, Scikit-learn, TensorFlow, Docker","https://github.com/your-username/ml-model","https://ml-model.example.com","web"
+Web Application,"Modern web application with real-time features","imgbin-rmit-university-vietnam-rmit-graduate-school-of-business-and-law-logo-grant-camp-city-campus-business-BxczizG8gvdg6fK2iRY8JRT6D.jpg","React, Node.js, MongoDB, AWS","https://github.com/your-username/web-app","https://webapp.example.com","web"
+Automation Script,"Automated data processing and reporting system","startts-logo.svg","Python, Pandas, Airflow, Docker","https://github.com/your-username/automation","https://automation.example.com","web"
+Data Pipeline,"ETL pipeline for processing large datasets","person-sits-looking-out-towards-still-water.jpg","Python, Apache Spark, Kafka, AWS","https://github.com/your-username/data-pipeline","https://pipeline.example.com","web" 

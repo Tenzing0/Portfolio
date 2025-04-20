@@ -2,18 +2,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load projects data
     loadProjects();
-    
-    // Initialize filter functionality
-    initProjectFilters();
 });
 
 // Load projects from CSV
 async function loadProjects() {
     try {
+        showLoading();
         const response = await fetch('data/projects.csv');
         const csvText = await response.text();
         const projects = parseCSV(csvText);
         displayProjects(projects);
+        showProjects();
+        // Initialize filter functionality
+        initProjectFilters(projects);
     } catch (error) {
         console.error('Error loading projects:', error);
         showError('Failed to load projects. Please try again later.');
@@ -29,7 +30,7 @@ function parseCSV(csvText) {
         const values = line.split(',');
         const project = {};
         headers.forEach((header, index) => {
-            project[header.trim()] = values[index] ? values[index].trim() : '';
+            project[header.trim()] = values[index] ? values[index].trim().replace(/^"|"$/g, '') : '';
         });
         return project;
     });
@@ -41,10 +42,7 @@ function displayProjects(projects) {
     if (!projectsGrid) return;
     
     projectsGrid.innerHTML = projects.map(project => `
-        <div class="project-card">
-            <div class="project-image">
-                <img src="${project.image}" alt="${project.title}" class="lazy">
-            </div>
+        <div class="project-card" data-aos="fade-up" data-technologies="${project.technologies.toLowerCase()}">
             <div class="project-content">
                 <h3>${project.title}</h3>
                 <p>${project.description}</p>
@@ -68,50 +66,101 @@ function displayProjects(projects) {
             </div>
         </div>
     `).join('');
+
+    // Initialize AOS animations
+    if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+    }
+}
+
+// Function to show loading state
+function showLoading() {
+    const loadingMessage = document.getElementById('loadingMessage');
+    const projectsGrid = document.querySelector('.projects-grid');
+    const errorMessage = document.getElementById('errorMessage');
     
-    // Initialize lazy loading for images
-    common.initLazyLoading();
+    if (loadingMessage) loadingMessage.style.display = 'flex';
+    if (projectsGrid) projectsGrid.style.display = 'none';
+    if (errorMessage) errorMessage.style.display = 'none';
+}
+
+// Function to show error state
+function showError(message) {
+    const loadingMessage = document.getElementById('loadingMessage');
+    const projectsGrid = document.querySelector('.projects-grid');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    if (loadingMessage) loadingMessage.style.display = 'none';
+    if (projectsGrid) projectsGrid.style.display = 'none';
+    if (errorMessage) {
+        errorMessage.style.display = 'block';
+        const alertElement = errorMessage.querySelector('.alert');
+        if (alertElement) alertElement.textContent = message;
+    }
+}
+
+// Function to show projects
+function showProjects() {
+    const loadingMessage = document.getElementById('loadingMessage');
+    const projectsGrid = document.querySelector('.projects-grid');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    if (loadingMessage) loadingMessage.style.display = 'none';
+    if (projectsGrid) projectsGrid.style.display = 'grid';
+    if (errorMessage) errorMessage.style.display = 'none';
 }
 
 // Initialize project filters
-function initProjectFilters() {
+function initProjectFilters(projects) {
     const filterButtons = document.querySelectorAll('.project-filters .btn');
-    const projectCards = document.querySelectorAll('.project-card');
-    
+    if (!filterButtons.length) return;
+
     filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
+        button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter').toLowerCase();
+            
+            // Update active button state
             filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            const filter = this.dataset.filter;
-            
+            button.classList.add('active');
+
             // Filter projects
+            const projectCards = document.querySelectorAll('.project-card');
             projectCards.forEach(card => {
-                const technologies = card.querySelector('.project-tech').textContent.toLowerCase();
-                if (filter === 'all' || technologies.includes(filter.toLowerCase())) {
+                const technologies = card.getAttribute('data-technologies').toLowerCase();
+                const techArray = technologies.split(',').map(t => t.trim());
+                
+                if (filter === 'all') {
                     card.style.display = 'block';
-                    setTimeout(() => card.classList.add('show'), 10);
+                    card.classList.add('show');
+                } else if (filter === 'machine-learning') {
+                    // Special case for machine learning projects
+                    const mlTechs = ['tensorflow', 'scikit-learn', 'machine learning'];
+                    const isML = techArray.some(tech => mlTechs.some(mlTech => tech.includes(mlTech)));
+                    if (isML) {
+                        card.style.display = 'block';
+                        card.classList.add('show');
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.remove('show');
+                    }
                 } else {
-                    card.classList.remove('show');
-                    setTimeout(() => card.style.display = 'none', 300);
+                    // Regular technology filter
+                    if (techArray.some(tech => tech.includes(filter))) {
+                        card.style.display = 'block';
+                        card.classList.add('show');
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.remove('show');
+                    }
                 }
             });
+
+            // Refresh AOS animations
+            if (typeof AOS !== 'undefined') {
+                AOS.refresh();
+            }
         });
     });
-}
-
-// Show error message
-function showError(message) {
-    const projectsGrid = document.querySelector('.projects-grid');
-    if (projectsGrid) {
-        projectsGrid.innerHTML = `
-            <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-circle me-2"></i>${message}
-            </div>
-        `;
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -132,8 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Filter projects
             projectCards.forEach(card => {
-                const categories = card.getAttribute('data-categories').split(' ');
-                const shouldShow = filter === 'all' || categories.includes(filter);
+                const technologies = card.getAttribute('data-technologies').split(' ');
+                const shouldShow = filter === 'all' || technologies.includes(filter);
 
                 if (shouldShow) {
                     card.style.display = 'block';
@@ -166,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             projectCards.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const description = card.querySelector('p').textContent.toLowerCase();
-                const tags = card.getAttribute('data-categories').toLowerCase();
+                const tags = card.getAttribute('data-technologies').toLowerCase();
 
                 const matches = title.includes(searchTerm) || 
                               description.includes(searchTerm) || 

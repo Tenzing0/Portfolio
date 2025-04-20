@@ -1,118 +1,70 @@
-# Portfolio Website
+# Personal Portfolio Website
 
-A modern, responsive portfolio website showcasing my work, projects, and interests. Built with HTML5, CSS3, and JavaScript.
+A modern, responsive portfolio website showcasing my projects, reading list, and food adventures.
 
-## 🚀 Features
-
-- **Responsive Design**: Optimized for all devices and screen sizes
-- **Modern UI/UX**: Clean and intuitive interface with smooth animations
-- **Interactive Map**: Food Trail page with Leaflet.js integration
-- **Dynamic Content**: Books section with CSV data integration
-- **Project Showcase**: Detailed project cards with hover effects
-- **Contact Section**: Easy way to connect through social media
-- **Dark Mode**: Toggle between light and dark themes
-- **Performance Optimized**: Fast loading and smooth interactions
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-portfolio/
-├── src/                    # Source files
-│   ├── css/               # Stylesheets
-│   │   └── styles.css     # Main stylesheet
-│   ├── js/                # JavaScript files
-│   │   ├── script.js      # Main JavaScript
-│   │   └── scripts.js     # Additional scripts
-│   ├── data/              # Data files
-│   │   └── books.csv      # Books data
-│   ├── images/            # Image assets
-│   └── *.html             # HTML pages
-├── dist/                   # Production build
-│   ├── css/               # Minified CSS
-│   ├── js/                # Minified JS
-│   └── images/            # Optimized images
-├── .gitignore             # Git ignore rules
-├── package.json           # Project dependencies
-└── README.md              # Project documentation
+Portfolio Test/
+├── docs/               # GitHub Pages deployment directory
+│   ├── css/           # Stylesheets
+│   ├── data/          # CSV data files
+│   ├── images/        # Image assets
+│   ├── js/            # JavaScript files
+│   └── *.html         # HTML pages
+├── src/               # Source files
+│   ├── css/
+│   ├── data/
+│   ├── images/
+│   ├── js/
+│   └── *.html
+└── README.md
 ```
 
-## 🛠️ Technologies Used
+## Features
 
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Frameworks**: Bootstrap 5
-- **Libraries**: 
-  - Leaflet.js (Interactive Maps)
-  - Font Awesome (Icons)
-  - AOS (Animate On Scroll)
-- **Development Tools**:
-  - Git (Version Control)
-  - GitHub Pages (Hosting)
+- **Projects Page**: Showcase of technical projects with filtering by technology
+- **Books Page**: Curated reading list with ratings and reviews
+- **Food Trail**: Collection of favorite restaurants and food experiences
+- **Responsive Design**: Mobile-friendly layout
+- **Modern UI**: Clean, professional design with animations
+- **Dynamic Content**: Content loaded from CSV files for easy updates
+- **Filter & Search**: Easy navigation through projects and books
 
-## 📋 Pages
+## Recent Updates
 
-1. **Home** (`index.html`)
-   - Introduction
-   - Skills showcase
-   - Timeline
-   - Contact section
+- Added Naval Ravikant's book cover image
+- Updated project filtering functionality
+- Enhanced CSS styles for better visual appeal
+- Improved responsive design
+- Added loading states and error handling
 
-2. **Projects** (`projects.html`)
-   - Project cards
-   - Filtering options
-   - Detailed descriptions
+## Technologies Used
 
-3. **Books** (`books.html`)
-   - Book recommendations
-   - Ratings and reviews
-   - Genre filtering
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Bootstrap 5
+- AOS (Animate On Scroll)
+- Font Awesome Icons
 
-4. **Food Trail** (`food.html`)
-   - Interactive world map
-   - Food recommendations
-   - Location markers
-   - Dark mode toggle
+## Local Development
 
-## 🚀 Getting Started
+To run the website locally:
 
-1. Clone the repository:
+1. Clone the repository
+2. Navigate to the project directory
+3. Start a local server:
    ```bash
-   git clone https://github.com/Tenzing0/Portfolio.git
+   cd docs
+   python3 -m http.server 8080
    ```
+4. Visit `http://localhost:8080` in your browser
 
-2. Navigate to the project directory:
-   ```bash
-   cd Portfolio
-   ```
+## Deployment
 
-3. Open `src/index.html` in your web browser
+The website is deployed using GitHub Pages from the `/docs` directory. Any changes pushed to the main branch will be automatically deployed.
 
-## 🛠️ Development
+## Contributing
 
-- All source files are in the `src/` directory
-- CSS files are in `src/css/`
-- JavaScript files are in `src/js/`
-- Images are in `src/images/`
-
-## 🌐 Deployment
-
-The website is deployed using GitHub Pages:
-- Main branch is automatically deployed
-- Available at: https://tenzing0.github.io/Portfolio/
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Contact
-
-Tenzing Bhutia - [@Tenzing0](https://github.com/Tenzing0)
-
-Project Link: [https://github.com/Tenzing0/Portfolio](https://github.com/Tenzing0/Portfolio) 
+Feel free to submit issues and enhancement requests! 

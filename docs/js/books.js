@@ -1,30 +1,21 @@
 // Function to fetch and parse CSV data
 async function fetchBooksData() {
     try {
-        console.log('Starting to fetch books data...');
         const response = await fetch('data/books.csv');
-        console.log('Response status:', response.status);
-        console.log('Response OK:', response.ok);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const csvData = await response.text();
-        console.log('CSV Data received:', csvData.substring(0, 100) + '...');
-        
         const books = parseCSV(csvData);
-        console.log('Parsed books:', books);
         
         if (books.length === 0) {
             throw new Error('No books found in CSV');
         }
         return books;
     } catch (error) {
-        console.error('Error details:', {
-            message: error.message,
-            stack: error.stack
-        });
+        console.error('Error loading books:', error);
         showError(`Failed to load books: ${error.message}`);
         return [];
     }
@@ -32,36 +23,23 @@ async function fetchBooksData() {
 
 // Function to parse CSV data
 function parseCSV(csv) {
-    console.log('Starting CSV parsing...');
     const lines = csv.split('\n').filter(line => line.trim());
-    console.log('Number of lines found:', lines.length);
     
     if (lines.length < 2) {
-        console.error('CSV file is empty or has no data rows');
         throw new Error('CSV file is empty or has no data rows');
     }
 
     const headers = lines[0].split(',').map(header => header.trim());
-    console.log('Headers found:', headers);
-    
     const books = [];
 
     for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
-        if (!line) {
-            console.log(`Skipping empty line ${i}`);
-            continue;
-        }
+        if (!line) continue;
 
         const values = line.split(',').map(value => value.trim().replace(/^"|"$/g, ''));
-        console.log(`Line ${i} values:`, values);
         
         if (values.length !== headers.length) {
-            console.warn(`Line ${i} has incorrect number of values:`, {
-                expected: headers.length,
-                got: values.length,
-                line: line
-            });
+            console.warn(`Line ${i} has incorrect number of values`);
             continue;
         }
 
@@ -73,64 +51,51 @@ function parseCSV(csv) {
         books.push(book);
     }
     
-    console.log('Total books parsed:', books.length);
     return books;
 }
 
 // Function to show loading state
 function showLoading() {
-    console.log('Showing loading state...');
     const loadingMessage = document.getElementById('loadingMessage');
     const booksContainer = document.getElementById('booksContainer');
     const errorMessage = document.getElementById('errorMessage');
     
-    if (!loadingMessage || !booksContainer || !errorMessage) {
-        console.error('Missing required DOM elements:', {
-            loadingMessage: !!loadingMessage,
-            booksContainer: !!booksContainer,
-            errorMessage: !!errorMessage
-        });
-        return;
-    }
-    
-    loadingMessage.style.display = 'block';
-    booksContainer.style.display = 'none';
-    errorMessage.style.display = 'none';
+    if (loadingMessage) loadingMessage.style.display = 'flex';
+    if (booksContainer) booksContainer.style.display = 'none';
+    if (errorMessage) errorMessage.style.display = 'none';
 }
 
 // Function to show error state
 function showError(message) {
-    console.log('Showing error:', message);
     const loadingMessage = document.getElementById('loadingMessage');
     const booksContainer = document.getElementById('booksContainer');
     const errorMessage = document.getElementById('errorMessage');
     
-    if (!loadingMessage || !booksContainer || !errorMessage) {
-        console.error('Missing required DOM elements for error state');
-        return;
+    if (loadingMessage) loadingMessage.style.display = 'none';
+    if (booksContainer) booksContainer.style.display = 'none';
+    if (errorMessage) {
+        errorMessage.style.display = 'block';
+        const alertElement = errorMessage.querySelector('.alert');
+        if (alertElement) alertElement.textContent = message;
     }
-    
-    loadingMessage.style.display = 'none';
-    booksContainer.style.display = 'none';
-    errorMessage.style.display = 'block';
-    errorMessage.querySelector('.alert').textContent = message;
 }
 
 // Function to show books
 function showBooks() {
-    console.log('Showing books...');
     const loadingMessage = document.getElementById('loadingMessage');
     const booksContainer = document.getElementById('booksContainer');
     const errorMessage = document.getElementById('errorMessage');
     
-    if (!loadingMessage || !booksContainer || !errorMessage) {
-        console.error('Missing required DOM elements for showing books');
-        return;
+    if (loadingMessage) loadingMessage.style.display = 'none';
+    if (booksContainer) {
+        booksContainer.style.display = 'flex';
+        // Add visible class to all book cards after a short delay
+        setTimeout(() => {
+            const bookCards = booksContainer.querySelectorAll('.book-card');
+            bookCards.forEach(card => card.classList.add('visible'));
+        }, 100);
     }
-    
-    loadingMessage.style.display = 'none';
-    booksContainer.style.display = 'flex';
-    errorMessage.style.display = 'none';
+    if (errorMessage) errorMessage.style.display = 'none';
 }
 
 // Function to create book card HTML
@@ -139,20 +104,19 @@ function createBookCard(book) {
     
     return `
         <div class="col-md-6 col-lg-4">
-            <div class="book-card" data-genres="${book.genres}">
+            <div class="book-card">
                 <div class="book-image">
-                    <img src="${book.image_url}" alt="${book.title}" class="img-fluid" loading="lazy">
+                    <img src="images/${book.image}" alt="${book.title}" class="img-fluid" loading="lazy">
                 </div>
                 <div class="book-content">
                     <h3>${book.title}</h3>
-                    <p class="author">${book.author}</p>
-                    <p>${book.description}</p>
+                    <p class="book-author">${book.author}</p>
+                    <p class="book-description">${book.description}</p>
                     <div class="book-tags">
-                        ${book.tags.split(' ').map(tag => `<span class="tag">${tag.trim()}</span>`).join('')}
+                        <span class="tag">${book.genre}</span>
                     </div>
                     <div class="book-rating">
                         ${stars}
-                        <span class="rating-text">${book.rating_text}</span>
                     </div>
                 </div>
             </div>
@@ -200,83 +164,117 @@ function searchBooks(books, query) {
     );
 }
 
+// Function to render books
+function renderBooks(books) {
+    const booksContainer = document.getElementById('booksContainer');
+    if (!booksContainer) return;
+    
+    booksContainer.innerHTML = books.map(book => createBookCard(book)).join('');
+}
+
 // Initialize the books page
 async function initializeBooksPage() {
-    console.log('Initializing books page...');
-    showLoading();
-    
     try {
+        showLoading();
         const books = await fetchBooksData();
-        console.log('Books data loaded:', books);
-        
         if (books.length === 0) {
-            console.error('No books found in data');
-            showError('No books found.');
-            return;
-        }
-
-        const booksContainer = document.getElementById('booksContainer');
-        const filterButtons = document.querySelectorAll('.book-filters .btn');
-        const searchInput = document.getElementById('bookSearch');
-        
-        if (!booksContainer) {
-            console.error('Books container not found');
-            showError('Error: Could not find books container');
+            showError('No books found');
             return;
         }
         
-        // Render initial books
-        function renderBooks(booksToRender) {
-            console.log('Rendering books:', booksToRender.length);
-            if (booksToRender.length === 0) {
-                booksContainer.innerHTML = '<div class="col-12 text-center"><p>No books match your criteria.</p></div>';
-            } else {
-                booksContainer.innerHTML = booksToRender.map(createBookCard).join('');
-                // Add visible class to cards after a short delay for animation
-                setTimeout(() => {
-                    document.querySelectorAll('.book-card').forEach(card => {
-                        card.classList.add('visible');
-                    });
-                }, 100);
-            }
-            showBooks();
-        }
-        
-        // Initial render
         renderBooks(books);
-        
-        // Set up event listeners
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                console.log('Filter clicked:', button.dataset.filter);
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                const filter = button.dataset.filter;
-                const searchQuery = searchInput.value;
-                const filteredBooks = filterBooks(books, filter);
-                const searchedBooks = searchBooks(filteredBooks, searchQuery);
-                renderBooks(searchedBooks);
-            });
-        });
-        
-        searchInput.addEventListener('input', () => {
-            console.log('Search input:', searchInput.value);
-            const searchQuery = searchInput.value;
-            const activeFilter = document.querySelector('.book-filters .btn.active').dataset.filter;
-            const filteredBooks = filterBooks(books, activeFilter);
-            const searchedBooks = searchBooks(filteredBooks, searchQuery);
-            renderBooks(searchedBooks);
-        });
-        
+        showBooks();
     } catch (error) {
-        console.error('Error in initialization:', error);
-        showError('An error occurred while loading the books.');
+        console.error('Error initializing books page:', error);
+        showError('Failed to initialize books page');
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, starting initialization...');
+// Wait for DOM to be fully loaded before initializing
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeBooksPage);
+} else {
     initializeBooksPage();
-}); 
+}
+
+async function loadBooks() {
+    try {
+        const response = await fetch('data/books.csv');
+        const csvText = await response.text();
+        const books = parseCSV(csvText);
+        displayBooks(books);
+    } catch (error) {
+        console.error('Error loading books:', error);
+        document.getElementById('booksGrid').innerHTML = '<p class="text-center">Error loading books. Please try again later.</p>';
+    }
+}
+
+function parseCSV(csvText) {
+    const lines = csvText.split('\n');
+    const books = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        const [title, author, description, genre, rating, image] = line.split(',');
+        books.push({
+            title: title.trim(),
+            author: author.trim(),
+            description: description.trim(),
+            genre: genre.trim(),
+            rating: parseFloat(rating),
+            image: image.trim()
+        });
+    }
+    
+    return books;
+}
+
+function displayBooks(books) {
+    const booksGrid = document.getElementById('booksGrid');
+    booksGrid.innerHTML = '';
+    
+    books.forEach(book => {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'book-card';
+        bookCard.innerHTML = `
+            <div class="book-image">
+                <img src="images/${book.image}" alt="${book.title}">
+            </div>
+            <div class="book-content">
+                <h3>${book.title}</h3>
+                <p class="book-author">${book.author}</p>
+                <p class="book-description">${book.description}</p>
+                <div class="book-tags">
+                    <span class="tag">${book.genre}</span>
+                </div>
+                <div class="book-rating">
+                    ${generateStars(book.rating)}
+                </div>
+            </div>
+        `;
+        booksGrid.appendChild(bookCard);
+    });
+}
+
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    
+    let starsHTML = '';
+    for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<i class="fas fa-star"></i>';
+    }
+    if (halfStar) {
+        starsHTML += '<i class="fas fa-star-half-alt"></i>';
+    }
+    for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<i class="far fa-star"></i>';
+    }
+    return starsHTML;
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', loadBooks); 
