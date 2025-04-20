@@ -22,7 +22,8 @@ portfolio/
 │   │   └── styles.css     # Main stylesheet
 │   ├── js/                # JavaScript files
 │   │   ├── script.js      # Main JavaScript
-│   │   ├── scripts.js     # Additional scripts
+│   │   └── scripts.js     # Additional scripts
+│   ├── data/              # Data files
 │   │   └── books.csv      # Books data
 │   ├── images/            # Image assets
 │   └── *.html             # HTML pages
