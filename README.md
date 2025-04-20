@@ -1,76 +1,117 @@
 # Portfolio Website
 
-A professional portfolio website showcasing my work, projects, and interests, built with modern web technologies.
+A modern, responsive portfolio website showcasing my work, projects, and interests. Built with HTML5, CSS3, and JavaScript.
 
-## Project Structure
+## 🚀 Features
+
+- **Responsive Design**: Optimized for all devices and screen sizes
+- **Modern UI/UX**: Clean and intuitive interface with smooth animations
+- **Interactive Map**: Food Trail page with Leaflet.js integration
+- **Dynamic Content**: Books section with CSV data integration
+- **Project Showcase**: Detailed project cards with hover effects
+- **Contact Section**: Easy way to connect through social media
+- **Dark Mode**: Toggle between light and dark themes
+- **Performance Optimized**: Fast loading and smooth interactions
+
+## 📁 Project Structure
 
 ```
-portfolio-website/
-├── assets/              # Static assets
-│   ├── css/            # CSS files
-│   ├── js/             # JavaScript files
-│   ├── images/         # Image assets
-│   └── fonts/          # Font files
-├── pages/              # Website pages
-│   ├── index.html      # Home page
-│   ├── projects.html   # Projects showcase
-│   ├── books.html      # Books collection
-│   └── food-trail.html # Food recommendations
-├── styles.css          # Main stylesheet
-└── README.md          # Project documentation
+portfolio/
+├── src/                    # Source files
+│   ├── css/               # Stylesheets
+│   │   └── styles.css     # Main stylesheet
+│   ├── js/                # JavaScript files
+│   │   ├── script.js      # Main JavaScript
+│   │   ├── scripts.js     # Additional scripts
+│   │   └── books.csv      # Books data
+│   ├── images/            # Image assets
+│   └── *.html             # HTML pages
+├── dist/                   # Production build
+│   ├── css/               # Minified CSS
+│   ├── js/                # Minified JS
+│   └── images/            # Optimized images
+├── .gitignore             # Git ignore rules
+├── package.json           # Project dependencies
+└── README.md              # Project documentation
 ```
 
-## Features
+## 🛠️ Technologies Used
 
-- Responsive design optimized for all devices
-- Modern and clean UI/UX
-- Interactive project showcase
-- Books collection with ratings and reviews
-- Food Trail page with interactive map and recommendations
-- Contact form
-- Smooth scrolling and animations
-- SEO optimized
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Frameworks**: Bootstrap 5
+- **Libraries**: 
+  - Leaflet.js (Interactive Maps)
+  - Font Awesome (Icons)
+  - AOS (Animate On Scroll)
+- **Development Tools**:
+  - Git (Version Control)
+  - GitHub Pages (Hosting)
 
-## Pages
+## 📋 Pages
 
-1. **Home** - Introduction and overview
-2. **Projects** - Showcase of completed projects
-3. **Books** - Collection of favorite books with ratings
-4. **Food Trail** - Interactive food recommendations and map
+1. **Home** (`index.html`)
+   - Introduction
+   - Skills showcase
+   - Timeline
+   - Contact section
 
-## Technologies Used
+2. **Projects** (`projects.html`)
+   - Project cards
+   - Filtering options
+   - Detailed descriptions
 
-- HTML5
-- CSS3
-- JavaScript
-- Google Maps API
-- Font Awesome
-- Google Fonts
+3. **Books** (`books.html`)
+   - Book recommendations
+   - Ratings and reviews
+   - Genre filtering
 
-## Getting Started
+4. **Food Trail** (`food.html`)
+   - Interactive world map
+   - Food recommendations
+   - Location markers
+   - Dark mode toggle
 
-1. Clone the repository
-2. Open `index.html` in your web browser
-3. Navigate through the different pages using the navigation menu
+## 🚀 Getting Started
 
-## Deployment
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Tenzing0/Portfolio.git
+   ```
 
-This website is deployed using GitHub Pages. To deploy your own version:
+2. Navigate to the project directory:
+   ```bash
+   cd Portfolio
+   ```
 
-1. Fork this repository
-2. Go to your repository settings
-3. Navigate to Pages
-4. Select the main branch as the source
-5. Your site will be published at `https://[your-username].github.io/[repository-name]`
+3. Open `src/index.html` in your web browser
 
-## Contributing
+## 🛠️ Development
+
+- All source files are in the `src/` directory
+- CSS files are in `src/css/`
+- JavaScript files are in `src/js/`
+- Images are in `src/images/`
+
+## 🌐 Deployment
+
+The website is deployed using GitHub Pages:
+- Main branch is automatically deployed
+- Available at: https://tenzing0.github.io/Portfolio/
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## License
+## 📝 License
 
-This project is licensed under the MIT License. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📞 Contact
+
+Tenzing Bhutia - [@Tenzing0](https://github.com/Tenzing0)
+
+Project Link: [https://github.com/Tenzing0/Portfolio](https://github.com/Tenzing0/Portfolio) 
