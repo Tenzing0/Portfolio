@@ -1,0 +1,6 @@
+title,description,image,technologies,github_url,live_url
+Data Analytics Dashboard,"A comprehensive dashboard for analyzing business metrics and KPIs","project1.jpg","Python, Tableau, SQL, AWS","https://github.com/your-username/data-dashboard","https://dashboard.example.com"
+Machine Learning Model,"Predictive model for customer behavior analysis","project2.jpg","Python, Scikit-learn, TensorFlow, Docker","https://github.com/your-username/ml-model","https://ml-model.example.com"
+Web Application,"Modern web application with real-time features","project3.jpg","React, Node.js, MongoDB, AWS","https://github.com/your-username/web-app","https://webapp.example.com"
+Automation Script,"Automated data processing and reporting system","project4.jpg","Python, Pandas, Airflow, Docker","https://github.com/your-username/automation","https://automation.example.com"
+Data Pipeline,"ETL pipeline for processing large datasets","project5.jpg","Python, Apache Spark, Kafka, AWS","https://github.com/your-username/data-pipeline","https://pipeline.example.com" 

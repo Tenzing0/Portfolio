@@ -11,7 +11,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <style>
         #map {
             height: 500px;
@@ -394,59 +394,64 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Custom JS -->
+    <script src="js/script.js"></script>
     <script>
         // Initialize the map
-        const map = L.map('map').setView([20, 0], 2);
+        document.addEventListener('DOMContentLoaded', function() {
+            const map = L.map('map').setView([20, 0], 2);
 
-        // Add tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            minZoom: 2,
-            maxZoom: 18
-        }).addTo(map);
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                minZoom: 2,
+                maxZoom: 18
+            }).addTo(map);
 
-        // Add markers for food locations
-        const locations = [
-            {
-                name: 'Melbourne',
-                lat: -37.8136,
-                lng: 144.9631,
-                description: 'Melbourne, Australia - Coffee Capital'
-            },
-            {
-                name: 'Sydney',
-                lat: -33.8688,
-                lng: 151.2093,
-                description: 'Sydney, Australia - Harbor City'
-            },
-            {
-                name: 'Delhi',
-                lat: 28.6139,
-                lng: 77.2090,
-                description: 'Delhi, India - Street Food Paradise'
-            }
-        ];
+            // Add markers for food locations
+            const locations = [
+                {
+                    name: 'Melbourne',
+                    lat: -37.8136,
+                    lng: 144.9631,
+                    description: 'Melbourne, Australia - Coffee Capital'
+                },
+                {
+                    name: 'Sydney',
+                    lat: -33.8688,
+                    lng: 151.2093,
+                    description: 'Sydney, Australia - Harbor City'
+                },
+                {
+                    name: 'Delhi',
+                    lat: 28.6139,
+                    lng: 77.2090,
+                    description: 'Delhi, India - Street Food Paradise'
+                }
+            ];
 
-        locations.forEach(location => {
-            const marker = L.marker([location.lat, location.lng]).addTo(map);
-            marker.bindPopup(`<b>${location.name}</b><br>${location.description}`);
-        });
+            locations.forEach(location => {
+                const marker = L.marker([location.lat, location.lng]).addTo(map);
+                marker.bindPopup(`<b>${location.name}</b><br>${location.description}`);
+            });
 
-        // Dark mode toggle
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        darkModeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                    minZoom: 2,
-                    maxZoom: 18
-                }).addTo(map);
-            } else {
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                    minZoom: 2,
-                    maxZoom: 18
-                }).addTo(map);
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                            minZoom: 2,
+                            maxZoom: 18
+                        }).addTo(map);
+                    } else {
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                            minZoom: 2,
+                            maxZoom: 18
+                        }).addTo(map);
+                    }
+                });
             }
         });
     </script>
